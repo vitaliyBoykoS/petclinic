@@ -1,7 +1,7 @@
 node { 
     stage 'Clone the project' 
     agent 'java'
-    git ' https://github.com/vitaliyBoykoS/Test_Task.git' 
+    git 'https://github.com/vitaliyBoykoS/petclinic.git' 
     
    
     dir('.') { 
