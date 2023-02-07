@@ -1,0 +1,26 @@
+node { 
+    stage 'Clone the project' 
+    agent 'java'
+    git ' https://github.com/vitaliyBoykoS/Test_Task.git' 
+    
+   
+    dir('.') { 
+        stage("Compilation and Analysis") { 
+            parallel 'Compilation': {
+               
+                sh "sudo fuser -k 80/tcp || true"
+                sh "mvn clean install -DskipTests" 
+            } 
+        } 
+         
+        stage("Tests and Deployment") { 
+
+            stage("Staging") {
+               
+                 withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
+                sh 'nohup sudo mvn spring-boot:run'
+                }
+            }
+        } 
+    } 
+}
